@@ -27,46 +27,35 @@
     
     docker-vm默认添加了2个网卡，我们只需在“网卡1”中添加一条 127.0.0.1 80:80的转发就可以了。就这样修改后，就可以保证docker-vm既可以访问外网，也可以在windows上通过127.0.0.1，在浏览器上访问docker-vm的127.0.0.1。如图![image](https://github.com/mywoogle/sourcetree_gitflow_Multi-Version-Concurrency-release/blob/master/image/2.png)
     
-3.  add Multiple versions of master in sourcetree,the format as master_version
-    example,master_qq,master_sina
+3.  容器操作
+
+    3.1 用docker-machine start启动docker-vm，然后就可在里面操作了。
+    
+    3.2 创建容器
         
-        ![image](https://github.com/mywoogle/sourcetree_gitflow_Multi-Version-Concurrency-release/blob/master/image/3.png)
+    创建并运行容器 docker run ubuntu：14.04,它会在docker-vm寻找ubuntu：14.04的镜像，若没有就从dockerhub上下载。
+    查看容器 docker ps [-a] [-q] 不加参数查看正在运行的容器，加-a查看所有的容器，加-q查看容器id
+    启动容器 docker start 容器id/名字
+    添加客户端 docker attach 容器id/名字
+    关闭容器 docker stop 容器id/名字
+    删除容器 docker rm 容器id，coker rm $(docekr ps -a -q)删除所有的容器
     
-4.  add Multiple versions of develop in sourcetree,the format as develop_version
-    example,develop_qq,develop_sina
-        ![image](https://github.com/mywoogle/sourcetree_gitflow_Multi-Version-Concurrency-release/blob/master/image/4.png)
-        ![image](https://github.com/mywoogle/sourcetree_gitflow_Multi-Version-Concurrency-release/blob/master/image/5.png)
+    docker run的其它参数 --name=lampv2添加名字，--net=host容器使用docker-vm的网络设置，-p 80:80把容器的80端口映射到docker-vm的80端口，-v /c/Users/website:/var/www/html把docker-vm的/c/Users/website目录挂载到容器的/var/www/html目录进行共享，-i使用标准输入，-t启动交互式客户端。所以一般创建容器可能会用这个命令 docker run -it -v /c/Users/:/var/www/html/website --name=lampv3 --net=host woogle/lamp:v3 /bin/bash
     
-5.  add a featue base on curent develop,format:_version_fearurename,example:_qq_feature1
-        ![image](https://github.com/mywoogle/sourcetree_gitflow_Multi-Version-Concurrency-release/blob/master/image/6.png)
-        ![image](https://github.com/mywoogle/sourcetree_gitflow_Multi-Version-Concurrency-release/blob/master/image/7.png)
+4.  镜像操作
 
-6.  add a hotfix base on curent master,format:_version_hotfix1,example:_qq_hotfix1
-        ![image](https://github.com/mywoogle/sourcetree_gitflow_Multi-Version-Concurrency-release/blob/master/image/8.png)
-        ![image](https://github.com/mywoogle/sourcetree_gitflow_Multi-Version-Concurrency-release/blob/master/image/9.png)
-
-
-# How To Use(OR use git hook)
-1.  copy the post-checkout to /path/to/repository/.git/hooks,example D:\woogle_new\data\gittest\.git\hooks\post-checkout
-        ![image](https://github.com/mywoogle/sourcetree_gitflow_Multi-Version-Concurrency-release/blob/master/image/301.png)
-
-2.  add Multiple versions of master in sourcetree,the format as master_version
-    example,master_qq,master_sina
-        ![image](https://github.com/mywoogle/sourcetree_gitflow_Multi-Version-Concurrency-release/blob/master/image/2.png)
-        ![image](https://github.com/mywoogle/sourcetree_gitflow_Multi-Version-Concurrency-release/blob/master/image/3.png)
+    4.1 导入镜像：cat lampv4.tar | docker import - woogle/lamp:v4,把lampv4.tar这个文件导入成，仓库名为woogle/lamp,版本我v4的镜像
     
-3.  add Multiple versions of develop in sourcetree,the format as develop_version
-    example,develop_qq,develop_sina
-        ![image](https://github.com/mywoogle/sourcetree_gitflow_Multi-Version-Concurrency-release/blob/master/image/4.png)
-        ![image](https://github.com/mywoogle/sourcetree_gitflow_Multi-Version-Concurrency-release/blob/master/image/5.png)
+    4.2 查看镜像： docker images
     
-4.  add a featue base on curent develop,format:_version_fearurename,example:_qq_feature1
-        ![image](https://github.com/mywoogle/sourcetree_gitflow_Multi-Version-Concurrency-release/blob/master/image/6.png)
-        ![image](https://github.com/mywoogle/sourcetree_gitflow_Multi-Version-Concurrency-release/blob/master/image/7.png)
-
-5.  add a hotfix base on curent master,format:_version_hotfix1,example:_qq_hotfix1
-        ![image](https://github.com/mywoogle/sourcetree_gitflow_Multi-Version-Concurrency-release/blob/master/image/8.png)
-        ![image](https://github.com/mywoogle/sourcetree_gitflow_Multi-Version-Concurrency-release/blob/master/image/9.png)
+    4.3 commit创建镜像： 首先停止需要创建进行的容器。docker commit -m='messge' --author='woogle' 容器id woogle/lampv1:v1
+   
+    4.4 使用Dockerfile创建镜像：后面一点研究。
+    
+    4.5 删除镜像： docker rmi 镜像id
+    
+    5.5 导出容器： docker export my_container > my_container.tar
+    
 
 # License
 Feel free to use it.
