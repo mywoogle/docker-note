@@ -54,7 +54,7 @@
     
     4.5 删除镜像： docker rmi 镜像id
     
-    5.6 这里是我导出来的一个lamp容器，放在百度云上的，http://pan.baidu.com/s/1boROv3D
+    5.6 这里是我导出来的一个lamp容器，放在百度云上的，http://pan.baidu.com/s/1dFNqMlF
     
     若果你要使用这个容器，请在你的工作目录下建一个website目录，并在website目录下建一个web目录存你的web代码，在website目录下建一个database目录用来存mysql数据。都穿创建好后，在docker-vm与windows的共享目录映射修改成映射到你的website目录上。然后后把这个文件导入成镜像，最后使用类似样子的命令docker run -it -v /c/Users/:/var/www/html/website --name=lampv3 --net=host woogle/lamp:v3 /bin/bash创建并启动容器。
     
