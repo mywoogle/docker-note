@@ -15,6 +15,8 @@
 
     1.4. 安装好后，点击桌面上的Docker Quickstart Terminal这快捷方式，会自动创建名字为default的dockervm，并启动。你会发现在这个启动的窗口中不能复制，很不方便，你可以安装最新版的git bash替换现在已经安装的，体验要好的多。在git-bash中输入docker-machine ssh，就可以进入刚刚启动的docker-vm。docker-machine start/stop分别为启动和关闭docker-vm，更多操作，请用docker-machine --help查看
     
+    1.5. 创建machine   docker-machine create --driver virtualbox my-machine
+    
 2.  配置docker-vm
 
     2.0 执行docker-machine stop关闭docker-vm然后进行配置
