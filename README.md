@@ -69,5 +69,6 @@ Feel free to use it.
 
     ```shell
     docker exec -it <container_id> /bin/bash
+    #退出docker exec打开的终端“不会”关闭这容器，而退出attach打开的终端“会”关闭这个容器
     ```
         
