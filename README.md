@@ -63,3 +63,11 @@
 
 # License
 Feel free to use it.
+
+# other
+* 如何打开多个终端进入Docker容器 
+
+    ```shell
+    docker exec -it <container_id> /bin/bash
+    ```
+        
